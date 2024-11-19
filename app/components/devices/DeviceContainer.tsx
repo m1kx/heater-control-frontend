@@ -16,7 +16,7 @@ const DeviceContainer = (): ReactElement => {
       deviceStore.setDevices(data.devices);
     })
   }, [])
-  
+
   return (
     <WidgetContainer useGrid label='devices'>
       {deviceStore.devices.map(device => (

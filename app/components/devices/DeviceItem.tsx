@@ -16,9 +16,14 @@ interface Props {
 const DeviceItem = ({ device }: Props) => {
   const deviceStore = useDeviceStore((state) => state);
   const [targetTemperature, setTargetTemperature] = useState(device.targetTemperature);
+  const [initialMount, setInitialMount] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (initialMount) {
+      setInitialMount(false);
+      return;
+    }
     setIsLoading(true);
     Api.setDeviceTemperature({
       targetTemperature,
