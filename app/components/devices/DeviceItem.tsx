@@ -52,7 +52,7 @@ const DeviceItem = ({ device }: Props) => {
     setIsLoading(false);
   }
 
-  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const onBlur = () => {
     setTargetTemperature(inputValue);
   }
 
