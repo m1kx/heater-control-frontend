@@ -25,6 +25,22 @@
     aspect-ratio: 1/1;
   }
 
+  input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+
+    &:hover {
+      outline: none;
+      border: none;
+    }
+  }
+
   &.loading {
     opacity: 0.5;
     pointer-events: none;

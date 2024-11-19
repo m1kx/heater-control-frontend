@@ -18,8 +18,10 @@ const DeviceItem = ({ device }: Props) => {
   const [targetTemperature, setTargetTemperature] = useState(device.targetTemperature);
   const [initialMount, setInitialMount] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState(0);
 
   useEffect(() => {
+    setInputValue(targetTemperature);
     if (initialMount) {
       setInitialMount(false);
       return;
@@ -50,6 +52,10 @@ const DeviceItem = ({ device }: Props) => {
     setIsLoading(false);
   }
 
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setTargetTemperature(inputValue);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.deviceHeader}>
@@ -64,7 +70,7 @@ const DeviceItem = ({ device }: Props) => {
         [styles.loading!]: isLoading
       })}>
         <button onClick={onDecreaseClicked}>-</button>
-        <div>{targetTemperature}</div>
+        <input type='tel' value={inputValue} onChange={(e) => setInputValue(Number(e.target.value))} onBlur={onBlur} />
         <button onClick={onIncreaseClicked}>+</button>
       </div>
     </div>
