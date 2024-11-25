@@ -47,8 +47,8 @@ const AddCron = (): ReactElement => {
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
 
-  const handleCronChange = (e: any) => {
-    const value = e.target.value;
+  const handleCronChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
     setCronExpression(value);
 
     try {
@@ -56,7 +56,8 @@ const AddCron = (): ReactElement => {
       setError('');
       const desc = cronstrue.toString(value);
       setDescription(desc);
-    } catch (_error: unknown) {
+    } catch (error) {
+      console.log(error);
       setError('Invalid cron expression');
       setDescription('');
     }
