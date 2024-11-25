@@ -70,7 +70,7 @@ const DeviceItem = ({ device }: Props) => {
         [styles.loading!]: isLoading
       })}>
         <button onClick={onDecreaseClicked}>-</button>
-        <input type='number' value={inputValue} onChange={(e) => setInputValue(Number(e.target.value))} onBlur={onBlur} />
+        <input type='text' value={inputValue} onChange={(e) => setInputValue(Number(e.target.value))} onBlur={onBlur} />
         <button onClick={onIncreaseClicked}>+</button>
       </div>
     </div>

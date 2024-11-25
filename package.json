@@ -9,10 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "antd": "^5.22.2",
     "classnames": "^2.5.1",
+    "cron-parser": "^4.9.0",
+    "cronstrue": "^2.52.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
+    "react-cron-generator": "^2.0.13",
+    "react-cron-schedule": "^2.2.6",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-js-cron": "^5.0.1",
     "sass": "^1.80.7",
     "zustand": "^5.0.1"
   },

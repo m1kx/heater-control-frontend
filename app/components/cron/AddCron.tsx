@@ -9,6 +9,9 @@ import { ReactElement, useRef, useState } from 'react';
 import Plus from '../icons/Plus';
 import styles from './AddCron.module.scss';
 
+import cronParser from 'cron-parser';
+import cronstrue from 'cronstrue';
+
 
 const AddCron = (): ReactElement => {
   const deviceStore = useDeviceStore();
@@ -40,6 +43,25 @@ const AddCron = (): ReactElement => {
     setIsLoading(false);
   }
 
+  const [cronExpression, setCronExpression] = useState('* * * * *');
+  const [description, setDescription] = useState('');
+  const [error, setError] = useState('');
+
+  const handleCronChange = (e: any) => {
+    const value = e.target.value;
+    setCronExpression(value);
+
+    try {
+      cronParser.parseExpression(value);
+      setError('');
+      const desc = cronstrue.toString(value);
+      setDescription(desc);
+    } catch (err) {
+      setError('Invalid cron expression');
+      setDescription('');
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div onClick={plusClicked} className={classNames(styles.addCron, {
@@ -48,20 +70,22 @@ const AddCron = (): ReactElement => {
       })}>
         {isInputActive ? (
           <div className={styles.optionContainer}>
-          <div>
-            {deviceStore.devices.map(device => (
-              <div key={device.name} className={styles.deviceSelectElement}>
-                <label htmlFor={device.name}>{device.name}</label>
-                <input id={`${device.name}`} type='checkbox' />
-              </div>
-            ))}
-          </div>
-          <div className={styles.inputContainer}>
-            <input ref={cronInput} type="text" placeholder="cron" />
-            <input ref={nameInput} type="text" placeholder="name" />
-            <input ref={tempInput} type="number" placeholder="temp" />
-            <button onClick={addClicked}>add</button>
-          </div>
+            <div>
+              {deviceStore.devices.map(device => (
+                <div key={device.name} className={styles.deviceSelectElement}>
+                  <label htmlFor={device.name}>{device.name}</label>
+                  <input id={`${device.name}`} type='checkbox' />
+                </div>
+              ))}
+            </div>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {description && <p>{description}</p>}
+            <div className={styles.inputContainer}>
+              <input ref={cronInput} type="text" placeholder="cron" value={cronExpression} onChange={handleCronChange} />
+              <input ref={nameInput} type="text" placeholder="name" />
+              <input ref={tempInput} type="number" placeholder="temp" />
+              <button onClick={addClicked}>add</button>
+            </div>
           </div>
         ) : (
           <Plus size={30} />
