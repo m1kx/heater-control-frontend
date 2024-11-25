@@ -57,6 +57,7 @@ const AddCron = (): ReactElement => {
       const desc = cronstrue.toString(value);
       setDescription(desc);
     } catch (err) {
+      console.log(err);
       setError('Invalid cron expression');
       setDescription('');
     }
