@@ -1,28 +1,29 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import CronContainer from "./components/cron/CronContainer";
 import DeviceContainer from "./components/devices/DeviceContainer";
-import LoginForm from "./components/LoginForm";
 import styles from "./page.module.scss";
 
-export default function Home() {
-  const [apikey, setApikey] = useState<string | null>(null);
+export default async function Home() {
+  const baseUrl = process.env.BASE_API_URL;
+  const cronData = await fetch(`${baseUrl}/crons`, {
+    headers: {
+      Authorization: `Bearer ${process.env.API_KEY}`,
+    },
+  });
+  const cronJson = await cronData.json();
 
-  useEffect(() => {
-    setApikey(localStorage.getItem("apikey"));
-  }, []);
+  const deviceData = await fetch(`${baseUrl}/devices`, {
+    headers: {
+      Authorization: `Bearer ${process.env.API_KEY}`,
+    },
+  });
+  const deviceJson = await deviceData.json();
 
   return (
     <div className={styles.page}>
-      {apikey ? (
-        <>
-          <CronContainer />
-          <DeviceContainer />
-        </>
-      ) : (
-        <LoginForm />
-      )}
+      <>
+        <CronContainer crons={cronJson.crons} />
+        <DeviceContainer devices={deviceJson.devices} />
+      </>
     </div>
   );
 }

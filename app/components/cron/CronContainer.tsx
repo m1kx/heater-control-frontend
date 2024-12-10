@@ -1,19 +1,21 @@
 "use client";
 
-import { Api } from "@/app/util/api";
 import { useCronStore } from "@/app/util/stores/cronStore";
 import { ReactElement, useEffect } from "react";
 import WidgetContainer from "../WidgetContainer";
 import AddCron from "./AddCron";
 import CronItem from "./CronItem";
+import { Cron } from "@/app/util/types";
 
-const CronContainer = (): ReactElement => {
+interface Props {
+  crons: Cron[];
+}
+
+const CronContainer = ({ crons }: Props): ReactElement => {
   const cronStore = useCronStore((state) => state);
 
   useEffect(() => {
-    Api.getAllCrons().then((data) => {
-      cronStore.setCrons(data.crons);
-    });
+    cronStore.setCrons(crons);
   }, []);
 
   return (

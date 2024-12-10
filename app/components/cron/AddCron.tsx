@@ -1,17 +1,16 @@
-"use client"
+"use client";
 
-import { Api } from '@/app/util/api';
-import { useCronStore } from '@/app/util/stores/cronStore';
-import { useDeviceStore } from '@/app/util/stores/deviceStore';
-import { Cron } from '@/app/util/types';
-import classNames from 'classnames';
-import { ReactElement, useRef, useState } from 'react';
-import Plus from '../icons/Plus';
-import styles from './AddCron.module.scss';
+import { useCronStore } from "@/app/util/stores/cronStore";
+import { useDeviceStore } from "@/app/util/stores/deviceStore";
+import { Cron } from "@/app/util/types";
+import classNames from "classnames";
+import { ReactElement, useRef, useState } from "react";
+import Plus from "../icons/Plus";
+import styles from "./AddCron.module.scss";
 
-import cronParser from 'cron-parser';
-import cronstrue from 'cronstrue';
-
+import cronParser from "cron-parser";
+import cronstrue from "cronstrue";
+import { addNewCron } from "@/app/actions";
 
 const AddCron = (): ReactElement => {
   const deviceStore = useDeviceStore();
@@ -25,7 +24,7 @@ const AddCron = (): ReactElement => {
 
   const plusClicked = () => {
     setIsInputActive(true);
-  }
+  };
 
   const addClicked = async () => {
     setIsLoading(true);
@@ -33,19 +32,22 @@ const AddCron = (): ReactElement => {
       cron: cronInput.current!.value,
       name: nameInput.current!.value,
       temperature: Number(tempInput.current!.value),
-      rfAdresses: deviceStore.devices.filter(device => {
-        return (document.getElementById(device.name) as HTMLInputElement).checked
-      }).map(device => device.rfAddress)
-    }
+      rfAdresses: deviceStore.devices
+        .filter((device) => {
+          return (document.getElementById(device.name) as HTMLInputElement)
+            .checked;
+        })
+        .map((device) => device.rfAddress),
+    };
     cronStore.addCron(newCron);
-    await Api.newCron(newCron);
+    await addNewCron(newCron);
     setIsInputActive(false);
     setIsLoading(false);
-  }
+  };
 
-  const [cronExpression, setCronExpression] = useState('* * * * *');
-  const [description, setDescription] = useState('');
-  const [error, setError] = useState('');
+  const [cronExpression, setCronExpression] = useState("* * * * *");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
 
   const handleCronChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
@@ -53,36 +55,45 @@ const AddCron = (): ReactElement => {
 
     try {
       cronParser.parseExpression(value);
-      setError('');
+      setError("");
       const desc = cronstrue.toString(value);
       setDescription(desc);
-    } catch (error) {
-      console.log(error);
-      setError('Invalid cron expression');
-      setDescription('');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      setError("Invalid cron expression");
+      setDescription("");
     }
   };
 
   return (
     <div className={styles.container}>
-      <div onClick={plusClicked} className={classNames(styles.addCron, {
-        [styles.inputActive!]: isInputActive,
-        [styles.loading!]: isLoading,
-      })}>
+      <div
+        onClick={plusClicked}
+        className={classNames(styles.addCron, {
+          [styles.inputActive!]: isInputActive,
+          [styles.loading!]: isLoading,
+        })}
+      >
         {isInputActive ? (
           <div className={styles.optionContainer}>
             <div>
-              {deviceStore.devices.map(device => (
+              {deviceStore.devices.map((device) => (
                 <div key={device.name} className={styles.deviceSelectElement}>
                   <label htmlFor={device.name}>{device.name}</label>
-                  <input id={`${device.name}`} type='checkbox' />
+                  <input id={`${device.name}`} type="checkbox" />
                 </div>
               ))}
             </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
             {description && <p>{description}</p>}
             <div className={styles.inputContainer}>
-              <input ref={cronInput} type="text" placeholder="cron" value={cronExpression} onChange={handleCronChange} />
+              <input
+                ref={cronInput}
+                type="text"
+                placeholder="cron"
+                value={cronExpression}
+                onChange={handleCronChange}
+              />
               <input ref={nameInput} type="text" placeholder="name" />
               <input ref={tempInput} type="number" placeholder="temp" />
               <button onClick={addClicked}>add</button>
@@ -93,7 +104,7 @@ const AddCron = (): ReactElement => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AddCron;
