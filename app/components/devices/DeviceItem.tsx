@@ -68,6 +68,10 @@ const DeviceItem = ({ device }: Props) => {
     setTargetTemperature(inputValue);
   };
 
+  useEffect(() => {
+    setTargetTemperature(device.targetTemperature);
+  }, [device.targetTemperature]);
+
   return (
     <div className={styles.container}>
       <div className={styles.deviceHeader}>
