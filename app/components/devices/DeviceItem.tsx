@@ -20,11 +20,11 @@ const DeviceItem = ({ device }: Props) => {
   );
   const [initialMount, setInitialMount] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [inputValue, setInputValue] = useState(0);
+  const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setInputValue(targetTemperature);
+    setInputValue(targetTemperature.toString());
     if (initialMount) {
       setInitialMount(false);
       return;
@@ -65,7 +65,7 @@ const DeviceItem = ({ device }: Props) => {
   };
 
   const onBlur = () => {
-    setTargetTemperature(inputValue);
+    setTargetTemperature(Number(inputValue));
   };
 
   useEffect(() => {
@@ -99,9 +99,12 @@ const DeviceItem = ({ device }: Props) => {
       >
         <button onClick={onDecreaseClicked}>-</button>
         <input
-          type="text"
+          type="number"
+          pattern="[0-9]+([\.,][0-9]+)?"
           value={inputValue}
-          onChange={(e) => setInputValue(Number(e.target.value))}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
           onBlur={onBlur}
         />
         <button onClick={onIncreaseClicked}>+</button>

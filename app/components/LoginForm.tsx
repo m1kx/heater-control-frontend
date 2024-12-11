@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
+import styles from "./LoginForm.module.scss";
+
 const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
@@ -26,21 +28,20 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="">
-      <form onSubmit={onSubmit}>
-        <label htmlFor="">Password:</label>
-        <input
-          type="password"
-          id=""
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {passwordIncorrect && <p>Password incorrect</p>}
-        <button disabled={loading} type="submit">
-          {loading ? "loading..." : "submit"}
-        </button>
-      </form>
-    </div>
+    <form onSubmit={onSubmit} className={styles.form}>
+      <input
+        type="password"
+        placeholder="password"
+        id=""
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className={styles.input}
+      />
+      {passwordIncorrect && <p>Password incorrect</p>}
+      <button className={styles.button} disabled={loading} type="submit">
+        {loading ? "loading..." : "submit"}
+      </button>
+    </form>
   );
 };
 
