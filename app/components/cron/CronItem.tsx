@@ -6,7 +6,7 @@ import styles from "./CronItem.module.scss";
 import { useCronStore } from "@/app/util/stores/cronStore";
 import { Cron } from "@/app/util/types";
 import Trash from "../icons/Trash";
-import { deleteCron } from "@/app/actions";
+import { deleteCron, updateCron } from "@/app/actions";
 
 interface Props {
   cron: Cron;
@@ -21,10 +21,21 @@ const CronItem = ({ cron }: Props) => {
     });
   };
 
+  const onHeadingClicked = async () => {
+    await updateCron({ name: cron.name, enabled: !cron.enabled });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.subContainer}>
-        <div>{cron.name}</div>
+        <div
+          className={classNames(styles.nameHeading, {
+            [styles.isEnabled!]: cron.enabled,
+          })}
+          onClick={onHeadingClicked}
+        >
+          {cron.name}
+        </div>
         <div className={classNames(styles.reducedColor, styles.bold)}>
           {cron.rfAdresses.join(", ")}
         </div>

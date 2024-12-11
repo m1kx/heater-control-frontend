@@ -17,6 +17,14 @@
   }
 }
 
+.nameHeading {
+  color: rgb(225, 126, 111);
+
+  &.isEnabled {
+    color: rgb(149, 187, 149);
+  }
+}
+
 .removeContainer {
   height: 42px;
   aspect-ratio: 1/1;

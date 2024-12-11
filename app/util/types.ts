@@ -13,6 +13,7 @@ export interface Cron {
   temperature: number;
   name: string;
   oneTime: boolean;
+  enabled: boolean;
 }
 
 export interface CronsResponse extends BaseResponse {
@@ -57,4 +58,5 @@ export interface NewCronBody {
   temperature: number;
   rfAdresses: string[];
   oneTime: boolean;
+  enabled: boolean;
 }

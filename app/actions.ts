@@ -98,6 +98,17 @@ export const addNewCron = async (cronData: NewCronBody): Promise<void> => {
     await response.text();
 };
 
+export const updateCron = async (
+    cronData: Partial<NewCronBody>,
+): Promise<void> => {
+    const response = await fetch(`${baseUrl}/updatecron`, {
+        method: "POST",
+        body: JSON.stringify(cronData),
+        headers: await getAuth(),
+    });
+    await response.text();
+};
+
 export const deleteCron = async (cronName: string): Promise<void> => {
     const response = await fetch(`${baseUrl}/removecron`, {
         method: "POST",

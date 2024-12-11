@@ -34,6 +34,7 @@ const AddCron = (): ReactElement => {
       name: nameInput.current!.value,
       temperature: Number(tempInput.current!.value),
       oneTime: oneTimeInput.current!.checked,
+      enabled: true,
       rfAdresses: deviceStore.devices
         .filter((device) => {
           return (document.getElementById(device.name) as HTMLInputElement)
