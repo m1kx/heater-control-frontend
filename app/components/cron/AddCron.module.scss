@@ -52,3 +52,13 @@
   width: fit-content;
   gap: 5px;
 }
+
+.oneTime {
+  display: flex;
+  gap: 5px;
+  padding: 10px 0px;
+
+  input {
+    height: auto;
+  }
+}

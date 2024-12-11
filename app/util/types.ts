@@ -1,6 +1,6 @@
 export interface BaseResponse {
   success: boolean;
-  error?: string; 
+  error?: string;
 }
 
 /**
@@ -12,6 +12,7 @@ export interface Cron {
   rfAdresses: string[];
   temperature: number;
   name: string;
+  oneTime: boolean;
 }
 
 export interface CronsResponse extends BaseResponse {
@@ -55,4 +56,5 @@ export interface NewCronBody {
   cron: string;
   temperature: number;
   rfAdresses: string[];
+  oneTime: boolean;
 }

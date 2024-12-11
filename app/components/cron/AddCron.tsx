@@ -21,6 +21,7 @@ const AddCron = (): ReactElement => {
   const nameInput = useRef<HTMLInputElement>(null);
   const cronInput = useRef<HTMLInputElement>(null);
   const tempInput = useRef<HTMLInputElement>(null);
+  const oneTimeInput = useRef<HTMLInputElement>(null);
 
   const plusClicked = () => {
     setIsInputActive(true);
@@ -32,6 +33,7 @@ const AddCron = (): ReactElement => {
       cron: cronInput.current!.value,
       name: nameInput.current!.value,
       temperature: Number(tempInput.current!.value),
+      oneTime: oneTimeInput.current!.checked,
       rfAdresses: deviceStore.devices
         .filter((device) => {
           return (document.getElementById(device.name) as HTMLInputElement)
@@ -96,6 +98,10 @@ const AddCron = (): ReactElement => {
               />
               <input ref={nameInput} type="text" placeholder="name" />
               <input ref={tempInput} type="number" placeholder="temp" />
+              <div className={styles.oneTime}>
+                <label htmlFor="onetime">One time?</label>
+                <input ref={oneTimeInput} id={`onetime`} type="checkbox" />
+              </div>
               <button onClick={addClicked}>add</button>
             </div>
           </div>
