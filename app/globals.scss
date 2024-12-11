@@ -1,10 +1,12 @@
 :root {
+  color: black;
   --background: #ffffff;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    color: white;
     --background: #353535;
     --foreground: #ededed;
   }
@@ -40,6 +42,17 @@ input {
   border: none;
   border-radius: 5px;
   color: white;
+  border: none;
+  outline: none;
+
+  &:active {
+    outline: none;
+    border: none;
+  }
+}
+
+input[type=checkbox] {
+  background-color: #353535;
 }
 
 button {
