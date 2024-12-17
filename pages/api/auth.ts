@@ -10,6 +10,7 @@ export default async function handler(
     const cookie = serialize("site-access-token", password, {
         httpOnly: true,
         path: "/",
+        expires: new Date("9999-12-31T23:59:59Z"),
     });
 
     if (process.env.SITE_ACCESS_TOKEN !== password) {
